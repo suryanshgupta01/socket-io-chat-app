@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import socketIOClient from 'socket.io-client'
-import { Link, useNavigate } from 'react-router-dom'
 import ReactScrollToBottom from 'react-scroll-to-bottom'
+import logo from '../assets/logo icon.png'
+// import logo from '../assets/chat icon.jpg'
 let socket
 const ENDPOINT = `http://localhost:4004/`
 
 const Chat = ({ name }) => {
-    const navigate = useNavigate()
-    // if (name === '') navigate('/')
     const [ID, setID] = useState();
     const [allchats, setallchats] = useState([]);
     let chatref = useRef("")
@@ -27,14 +26,14 @@ const Chat = ({ name }) => {
         socket.on('connect', () => {
             // alert("connected")
             setID(socket.id)
-            console.log("socket connecte")
+            // console.log("socket connecte")
         })
         socket.emit('joined', { name })
 
         socket.on('welcome', (prop) => {
             setallchats(prevChats => [...prevChats, prop]);
 
-            console.log(prop)
+            // console.log(prop)
         })
 
         socket.on('UserJoined', (prop) => {
@@ -77,10 +76,15 @@ const Chat = ({ name }) => {
         <>
             <div className='chatapp'>
                 <div className='header'>
-                    <div className='heading'>
-                        socket chat . Welcome, {name}
+                    <div className='icon'>
+                        <a href='/'>
+                            <img src={logo} alt='Icon here' width={'70px'}  />
+                        </a>
                     </div>
-                    <a href='/'><i className="fa fa-times" style={{ fontSize: '30px' }} aria-hidden="true"></i></a>
+                    <div className='heading'>
+                        Welcome, {name}
+                    </div>
+                    <a href='/'><i className="cross fa fa-times" style={{ fontSize: '40px' }} aria-hidden="true"></i></a>
                 </div>
                 <ReactScrollToBottom className='chatbox'>
                     {allchats?.map((ele, ind) => {
@@ -89,7 +93,6 @@ const Chat = ({ name }) => {
                                 {
                                     (ele.user === name) ? 'YOU' : <p className='username'>{ele.user}</p>
                                 }
-                                {/* {ele.user} */}
                                 : {ele.msg}
                             </p>
                         )
@@ -97,16 +100,16 @@ const Chat = ({ name }) => {
                 </ReactScrollToBottom>
 
                 <div className='inputtag'>
-                    <input type='text' id="chat" ref={chatref}
+                    <input type='text' id="chat" ref={chatref} placeholder='🔍 Message'
                         onKeyDown={(e) => (e.key === 'Enter') ? sendmsg() : null}
                     // console.log((e.key))}
                     />
-                    <button className='send' onClick={sendmsg}>SEND</button>
+                    <button className='send' onClick={sendmsg}><i class="fa fa-paper-plane" style={{ fontSize: '30px' }} aria-hidden="true"></i></button>
                 </div>
 
 
             </div>
-            <a href='/' style={{ fontSize: '3rem' }}>BACK</a>
+            {/* <a href='/' style={{ fontSize: '3rem' }}>BACK</a> */}
 
         </>
     )

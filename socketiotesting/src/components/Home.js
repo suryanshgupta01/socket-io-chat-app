@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-
+import logo from '../assets/chat-app-logo-icon-vector.jpg'
 const Home = ({ GETname }) => {
     // const [name, setname] = useState("");
     const nameref = useRef();
-    const navigate = useNavigate()
     useEffect(() => {
         nameref.current.focus()
     }, []);
@@ -15,19 +13,22 @@ const Home = ({ GETname }) => {
             return
         }
         GETname(nameref.current.value)
-        console.log(nameref.current.value)
+        // console.log(nameref.current.value)
         nameref.current.value = ""
         // navigate('/chats')
     }
     return (
-        <div>
-            home page
-            <input type='text' id="name"
-                ref={nameref}
-                onKeyDown={(e) => (e.key == 'Enter') ? handlesubmit() : null} />
-            <button onClick={handlesubmit}>
-                LOGIN
-            </button>
+        <div className='homepage'>
+            <div className='border'>
+                <img src={logo} style={{ width: '300px' }} alt='Socket io image here' />
+                {/* <label htmlFor='name'>Enter your name</label> */}
+                <input type='text' id="name" placeholder='Enter your name'
+                    ref={nameref}
+                    onKeyDown={(e) => (e.key === 'Enter') ? handlesubmit() : null} />
+                <button onClick={handlesubmit}>
+                    LOGIN
+                </button>
+            </div>
         </div>
     )
 }

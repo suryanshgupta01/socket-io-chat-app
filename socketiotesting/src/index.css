@@ -1,13 +1,14 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  /* border: 4px solid red; */
   padding: 0;
 }
 
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -21,7 +22,7 @@ code {
 }
 
 .chats {
-  margin-top: 4rem;
+  margin-top: 1.5rem;
 }
 
 .username {
@@ -31,6 +32,8 @@ code {
 
 .heading {
   text-transform: uppercase;
+  font-size: 2.6rem;
+  font-weight: 700;
 }
 
 .inputtag {
@@ -42,10 +45,12 @@ code {
 
 .header {
   display: flex;
-  /* flex-direction: row; */
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  margin: 1rem;
-  padding: 1rem;
+  /* margin: 1rem; */
+  padding-left: 1rem;
+  padding-right: 1rem;
   border: 4px solid grey;
   width: 70vw;
   /* box-sizing: border-box; */
@@ -62,14 +67,20 @@ code {
   padding-right: 1rem;
 }
 
+/* FANCY DESIGN FOR INPUT TAG */
+/* .homepage input {
+  outline: 8px ridge rgba(243, 24, 24);
+  border-radius: 2rem;
+} */
+
 .chatapp input {
   width: 70vw;
   height: 3rem;
+  font-size: 1.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 0 1rem;
-  /* font-size: 1.2rem; */
-  /* display: inline; */
+
 }
 
 .send {
@@ -88,9 +99,9 @@ code {
 
 .chatapp {
   display: flex;
-
+  height: 100vh;
   flex-direction: column;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
 }
 
@@ -119,7 +130,72 @@ code {
   width: max-content;
   margin-left: auto;
   margin-right: auto;
-
   background-color: grey;
+}
 
+.homepage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.border {
+  /* border: 4px solid red; */
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 20px;
+  flex-direction: column;
+}
+
+.homepage label,
+.homepage button {
+  margin: 1rem;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.homepage input {
+  margin: 1rem;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  /* width: 20rem; */
+  height: 3rem;
+}
+
+@media (width<600px) {
+  .chatapp .heading {
+    font-size: 1.4rem;
+  }
+
+  .icon {
+    margin-left: 0.5rem;
+  }
+  .cross{
+    margin-right: 1rem;
+  }
+
+  .header {
+    margin: 0;
+    width: 100vw;
+    padding: 0;
+    border: none;
+  }
+
+  .chatbox {
+    height: 85vmax;
+    width: 100vw;
+    border: none;
+  }
+
+  .inputtag {
+    width: 100vw;
+  }
+  .border{
+    padding: 0;
+  }
 }

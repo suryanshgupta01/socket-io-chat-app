@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import Home from './components/Home'
 import Chat from './components/Chat'
-
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
+
 function App() {
   const [name, setname] = useState();
   const GETname = (name1) => {
