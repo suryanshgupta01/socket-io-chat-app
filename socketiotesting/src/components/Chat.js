@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import socketIOClient from 'socket.io-client'
 import ReactScrollToBottom from 'react-scroll-to-bottom'
 import logo from '../assets/logo icon.png'
+const port = process.env.PORT || 4000
 // import logo from '../assets/chat icon.jpg'
 let socket
-const ENDPOINT = `http://localhost:4004/`
-
+const ENDPOINT = `http://localhost:${port}/`
 const Chat = ({ name }) => {
     const [ID, setID] = useState();
     const [allchats, setallchats] = useState([]);
@@ -78,7 +78,7 @@ const Chat = ({ name }) => {
                 <div className='header'>
                     <div className='icon'>
                         <a href='/'>
-                            <img src={logo} alt='Icon here' width={'70px'}  />
+                            <img src={logo} alt='Icon here' width={'70px'} />
                         </a>
                     </div>
                     <div className='heading'>

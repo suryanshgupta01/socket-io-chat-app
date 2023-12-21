@@ -6,13 +6,13 @@ const app = express()
 const server = http.createServer(app)
 app.use(express.json())
 app.use(cors())
+env = require('dotenv').config()
 const io = socketIO(server)
-const port = 4004
+const port = process.env.PORT || 4000;
 
 const users = [{}]
-io.on("connection", (socket) => {
 
-    // console.log("new connection")
+io.on("connection", (socket) => {
     socket.on('joined', ({ name }) => {
         users[socket.id] = name
         // console.log(name, " has joined")
@@ -35,6 +35,6 @@ io.on("connection", (socket) => {
 
 
 app.get('/', (req, res) => {
-    res.send("RUNING BOYS LETS GO")
+    res.send("RUNNING BOYS LETS GO")
 })
-server.listen(port, () => console.log("listening at port", port))
+server.listen(port, () => { console.log("listening at port", port) })
