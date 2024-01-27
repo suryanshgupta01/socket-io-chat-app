@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import socketIOClient from 'socket.io-client'
+import io from 'socket.io-client'
 import ReactScrollToBottom from 'react-scroll-to-bottom'
 import logo from '../assets/logo icon.png'
 const port = process.env.PORT || 4000
 // import logo from '../assets/chat icon.jpg'
 let socket
-const ENDPOINT = `http://localhost:${port}/`
+const ENDPOINT = `http://localhost:4000`
 const Chat = ({ name }) => {
     const [ID, setID] = useState();
     const [allchats, setallchats] = useState([]);
@@ -20,8 +20,9 @@ const Chat = ({ name }) => {
     }
 
     useEffect(() => {
-        socket = socketIOClient(ENDPOINT, { transports: ['websocket'] })
-
+        socket = io(ENDPOINT
+            , { transports: ['websocket'] }
+        )
 
         socket.on('connect', () => {
             // alert("connected")
@@ -31,20 +32,22 @@ const Chat = ({ name }) => {
         socket.emit('joined', { name })
 
         socket.on('welcome', (prop) => {
-            setallchats(prevChats => [...prevChats, prop]);
-
+            // setallchats(prevChats => [...prevChats, prop]);
+            addtoend(prop)
             // console.log(prop)
         })
 
         socket.on('UserJoined', (prop) => {
-            setallchats(prevChats => [...prevChats, prop]);
+            addtoend(prop)
+            // setallchats(prevChats => [...prevChats, prop]);
             // console.log(user, msg)
         })
 
         socket.on('userleft', (prop) => {
             // console.log(user, msg);
 
-            setallchats(prevChats => [...prevChats, prop]);
+            addtoend(prop)
+            // setallchats(prevChats => [...prevChats, prop]);
 
 
             // setallchats(prevChats => [...prevChats, { user: user, msg: msg }]);
@@ -55,11 +58,14 @@ const Chat = ({ name }) => {
 
 
     }, [])
-
+    const addtoend = (prop) => {
+        setallchats(prevChats => [...prevChats, prop]);
+    }
     useEffect(() => {
         const handleReceivedMsg = (props) => {
             // console.log(user, id, msg);
-            setallchats(prevChats => [...prevChats, props]);
+            addtoend(props)
+            // setallchats(prevChats => [...prevChats, props]);
             // console.log("all", allchats)
             chatref.current.focus()
 

@@ -10,31 +10,28 @@ env = require('dotenv').config()
 const io = socketIO(server)
 const port = process.env.PORT || 4000;
 
-const users = [{}]
+const users = new Map()
 
 io.on("connection", (socket) => {
     socket.on('joined', ({ name }) => {
-        users[socket.id] = name
-        // console.log(name, " has joined")
+        // users[socket.id] = name
+        users.set(socket.id, name)
         //emit matlab sirf ussi ko jayega
-        socket.emit('welcome', { user: "Admin", msg: `welcome to chat ${users[socket.id]} ` })
+        socket.emit('welcome', { user: "Admin", msg: `welcome to chat ${users.get(socket.id)} ` })
         //broadczast matlab usko chhoke sabko jayega
-        socket.broadcast.emit('UserJoined', { user: "Admin", msg: `${users[socket.id]} has joined the chat` })
+        socket.broadcast.emit('UserJoined', { user: "Admin", msg: `${users.get(socket.id)} has joined the chat` })
     })
     socket.on('message', ({ id, msg }) => {
-        io.emit('sendMsg', { user: users[id], msg })
+        io.emit('sendMsg', { user: users.get(id), msg })
     })
     socket.on('disconnect', () => {
-        socket.broadcast.emit('userleft', { user: "Admin", msg: `${users[socket.id]} has left the chat` })
+        socket.broadcast.emit('userleft', { user: "Admin", msg: `${users.get(socket.id)} has left the chat` })
 
-        // console.log(users[socket.id], "disconnected")
+        if (users.has(socket.id))
+            users.delete(socket.id)
         socket.disconnect();
         // Clean up the socket connection on component unmount
     });
 })
 
-
-app.get('/', (req, res) => {
-    res.send("RUNNING BOYS LETS GO")
-})
 server.listen(port, () => { console.log("listening at port", port) })
